@@ -13,7 +13,6 @@
 #include <QDialogButtonBox>
 #include <QSettings>
 #include <QTextTable>
-#include "graphics_editor.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
