@@ -28,19 +28,13 @@ CONFIG += c++11
 SOURCES += \
         edit_functions.cpp \
         file_funct.cpp \
-        line.cpp \
         main.cpp \
-        mainwindow.cpp \
-        movabletextitem.cpp \
-        shape.cpp
+        mainwindow.cpp
 
 HEADERS += \
         edit_functions.h \
         file_funct.h \
-        line.h \
-        mainwindow.h \
-        movabletextitem.h \
-        shape.h
+        mainwindow.h
 
 FORMS += \
         mainwindow.ui

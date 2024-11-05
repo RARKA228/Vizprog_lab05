@@ -13,7 +13,7 @@
 #include <QDialogButtonBox>
 #include <QSettings>
 #include <QTextTable>
-#include "graphics_editor.h"
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -365,9 +365,5 @@ void MainWindow::on_actionfontColor_triggered()
            format.setForeground(color);
            updateTextFormat(format);
        }
-}
-void MainWindow::on_actionNew_2_triggered() {
-   // GraphicsEditorWindow *editorWindow = new GraphicsEditorWindow(this);
-    //editorWindow->show();
 }
 
