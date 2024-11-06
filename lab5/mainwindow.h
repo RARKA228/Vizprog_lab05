@@ -50,11 +50,14 @@ private slots:
     void on_actionfontColor_triggered();
 
     void on_actionNew_2_triggered();
+    void on_actionToggleTheme_triggered();
 
 private:
     Ui::MainWindow *ui;
 
     void updateTextFormat(const QTextCharFormat &format);
+    bool isDarkTheme = true; // Флаг для отслеживания текущей темы
+    void updateTheme(bool dark); // Метод для обновления темы
 };
 
 #endif // MAINWINDOW_H
