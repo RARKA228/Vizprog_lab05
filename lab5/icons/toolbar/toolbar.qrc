@@ -66,5 +66,20 @@
         <file>plus.png</file>
         <file>triangle.png</file>
         <file>upload.png</file>
+        <file>dark-mode.png</file>
+        <file>bold-text-negate.png</file>
+        <file>delete-column-negate.png</file>
+        <file>del-row-negate.png</file>
+        <file>file-negate.png</file>
+        <file>font (1)-negate.png</file>
+        <file>font-negate.png</file>
+        <file>interface-negate.png</file>
+        <file>italic-font-negate.png</file>
+        <file>menu-negate.png</file>
+        <file>open-folder-with-document-negate.png</file>
+        <file>recovery-negate.png</file>
+        <file>replace-negate.png</file>
+        <file>save-negate.png</file>
+        <file>underline-negate.png</file>
     </qresource>
 </RCC>
