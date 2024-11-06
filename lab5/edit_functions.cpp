@@ -30,7 +30,8 @@ void EditFunctions::replaceText(QTextEdit *textEdit, const QString &oldText, con
 }
 
 void EditFunctions::clearText(QTextEdit *textEdit) {
-    // Сохраняем текущее содержимое в временный файл
+
+    // сохраняем все в временный файл
     QFile file(tempFilePath);
     if (file.open(QIODevice::WriteOnly)) {
         QTextStream out(&file);
@@ -40,7 +41,7 @@ void EditFunctions::clearText(QTextEdit *textEdit) {
         QMessageBox::warning(nullptr, "Ошибка", "Не удалось сохранить текст во временный файл.");
     }
 
-    // Очищаем текст
+    // удаляем текст
     textEdit->clear();
 }
 
@@ -57,14 +58,14 @@ void EditFunctions::copyText(QTextEdit *textEdit) {
 }
 
 void EditFunctions::restoreText(QTextEdit *textEdit) {
-    // Считываем содержимое из временного файла
+    // читаем из временного файла
     QFile file(tempFilePath);
     if (file.open(QIODevice::ReadOnly)) {
         QTextStream in(&file);
         QString content = in.readAll();
         file.close();
 
-        // Вставляем содержимое обратно в текстовое поле
+        // возвращаем текст
         textEdit->setPlainText(content);
     } else {
         QMessageBox::warning(nullptr, "Ошибка", "Не удалось восстановить текст из временного файла.");

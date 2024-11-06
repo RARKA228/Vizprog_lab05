@@ -27,12 +27,16 @@ CONFIG += c++11
 
 SOURCES += \
         edit_functions.cpp \
+        edit_functions.cpp \
+        file_funct.cpp \
         file_funct.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
         edit_functions.h \
+        edit_functions.h \
+        file_funct.h \
         file_funct.h \
         mainwindow.h
 
