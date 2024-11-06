@@ -37,11 +37,68 @@ MainWindow::MainWindow(QWidget *parent)
     // Настройка таблиц
 
             //->setStyleSheet("QTableWidget::item { padding: 10px; }");
+
+    showMaximized();
+
+    // Устанавливаем стиль Fusion для темной темы
+    QApplication::setStyle("Fusion");
+
+    // Настройка темной палитры
+    QPalette darkPalette;
+
+    // Устанавливаем темные цвета для различных элементов
+    darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));  // Фон приложения
+    darkPalette.setColor(QPalette::WindowText, Qt::white);  // Цвет текста
+    darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));  // Цвет фона для виджетов
+    darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));  // Цвет для альтернативных баз
+    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);  // Цвет фона для подсказок
+    darkPalette.setColor(QPalette::ToolTipText, Qt::white);  // Цвет текста для подсказок
+    darkPalette.setColor(QPalette::Text, Qt::white);  // Цвет текста
+    darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));  // Цвет кнопок
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);  // Цвет текста на кнопках
+    darkPalette.setColor(QPalette::BrightText, Qt::red);  // Цвет яркого текста
+
+    // Устанавливаем эту палитру для всего приложения
+    qApp->setPalette(darkPalette);
+
+    // Настроим темный фон и светлый текст для QTextEdit
+    ui->textEdit->setStyleSheet("background-color: #2a2a2a; color: white;");
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::updateTheme(bool dark) {
+    if (dark) {
+        QApplication::setStyle("Fusion");
+
+        QPalette darkPalette;
+        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        qApp->setPalette(darkPalette);
+
+        ui->textEdit->setStyleSheet("background-color: #2a2a2a; color: white;");
+    } else {
+        QApplication::setStyle("Fusion");
+
+        QPalette lightPalette;
+        lightPalette.setColor(QPalette::Window, Qt::white);
+        lightPalette.setColor(QPalette::WindowText, Qt::black);
+        lightPalette.setColor(QPalette::Base, Qt::white);
+        lightPalette.setColor(QPalette::Text, Qt::black);
+        lightPalette.setColor(QPalette::Button, QColor(240, 240, 240));
+        lightPalette.setColor(QPalette::ButtonText, Qt::black);
+        qApp->setPalette(lightPalette);
+
+        ui->textEdit->setStyleSheet("background-color: white; color: black;");
+    }
+}
+
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     QSettings settings("MyCompany", "MyApp");
@@ -57,6 +114,11 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     settings.setValue("font", ui->textEdit->font());
 
     QMainWindow::closeEvent(event);
+}
+
+void MainWindow::on_actionToggleTheme_triggered() {
+    isDarkTheme = !isDarkTheme; // Переключаем тему
+    updateTheme(isDarkTheme); // Обновляем тему и иконки
 }
 
 void MainWindow::on_actionBold_triggered() {
@@ -105,7 +167,7 @@ void MainWindow::updateTextFormat(const QTextCharFormat &format) {
 
 void MainWindow::on_actionFontSize_triggered() {
     QDialog dialog(this);
-    dialog.setWindowTitle("Font Size");
+
 
     QSpinBox *spinBox = new QSpinBox(&dialog);
     spinBox->setRange(1, 100);
