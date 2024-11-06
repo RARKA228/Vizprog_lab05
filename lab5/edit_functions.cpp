@@ -30,6 +30,7 @@ void EditFunctions::replaceText(QTextEdit *textEdit, const QString &oldText, con
 }
 
 void EditFunctions::clearText(QTextEdit *textEdit) {
+
     // сохраняем все в временный файл
     QFile file(tempFilePath);
     if (file.open(QIODevice::WriteOnly)) {

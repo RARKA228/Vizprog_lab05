@@ -365,8 +365,4 @@ void MainWindow::on_actionfontColor_triggered()
            updateTextFormat(format);
        }
 }
-void MainWindow::on_actionNew_2_triggered() {
-   // GraphicsEditorWindow *editorWindow = new GraphicsEditorWindow(this);
-    //editorWindow->show();
-}
 
