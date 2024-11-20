@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QTextTable>
 #include <QColorDialog>
+
 namespace Ui {
 class MainWindow;
 }
@@ -38,25 +39,22 @@ private slots:
     void closeEvent(QCloseEvent *event) override;
 
     void on_actionInsertTable_triggered();
-
     void on_actionAddColumn_triggered();
-
     void on_actionAddRow_triggered();
-
     void on_actionRemoveRow_triggered();
     void on_actionRemoveColumn_triggered();
     void on_actionDataRecovery_triggered();
-
     void on_actionfontColor_triggered();
-
     void on_actionNew_2_triggered();
     void on_actionToggleTheme_triggered();
+    void onTextChanged(); // Метод для обработки изменений текста
 
 private:
     Ui::MainWindow *ui;
+    bool isDarkTheme = true; // Флаг для отслеживания текущей темы
+    bool isTextModified = false; // Флаг для отслеживания изменений текста
 
     void updateTextFormat(const QTextCharFormat &format);
-    bool isDarkTheme = true; // Флаг для отслеживания текущей темы
     void updateTheme(bool dark); // Метод для обновления темы
 };
 

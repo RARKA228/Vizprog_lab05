@@ -14,9 +14,8 @@
 #include <QSettings>
 #include <QTextTable>
 
-
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    : QMainWindow(parent), ui(new Ui::MainWindow), isTextModified(false) {
     ui->setupUi(this);
 
     // Восстанавливаем предыдущие настройки
@@ -33,10 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     QFont font = settings.value("font", QFont()).value<QFont>();
     ui->textEdit->setFont(font);
 
-
     // Настройка таблиц
-
-            //->setStyleSheet("QTableWidget::item { padding: 10px; }");
+    //->setStyleSheet("QTableWidget::item { padding: 10px; }");
 
     showMaximized();
 
@@ -63,6 +60,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Настроим темный фон и светлый текст для QTextEdit
     ui->textEdit->setStyleSheet("background-color: #2a2a2a; color: white;");
+
+    // Подключаем сигнал изменения текста к слоту для отслеживания изменений
+    connect(ui->textEdit, &QTextEdit::textChanged, this, &MainWindow::onTextChanged);
 }
 
 MainWindow::~MainWindow() {
@@ -99,8 +99,19 @@ void MainWindow::updateTheme(bool dark) {
     }
 }
 
-
 void MainWindow::closeEvent(QCloseEvent *event) {
+    if (isTextModified) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Warning", "Unsaved changes. Do you want to save?",
+                                      QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+        if (reply == QMessageBox::Yes) {
+            on_actionSave_triggered();
+        } else if (reply == QMessageBox::Cancel) {
+            event->ignore();
+            return;
+        }
+    }
+
     QSettings settings("MyCompany", "MyApp");
 
     // Сохраняем размер и положение окна
@@ -114,6 +125,10 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     settings.setValue("font", ui->textEdit->font());
 
     QMainWindow::closeEvent(event);
+}
+
+void MainWindow::onTextChanged() {
+    isTextModified = true;
 }
 
 void MainWindow::on_actionToggleTheme_triggered() {
@@ -139,7 +154,6 @@ void MainWindow::on_actionUnderline_triggered() {
     ui->textEdit->mergeCurrentCharFormat(format);
 }
 
-
 void MainWindow::on_actionSelectFont_triggered() {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, this);
@@ -149,7 +163,6 @@ void MainWindow::on_actionSelectFont_triggered() {
         updateTextFormat(fmt);
     }
 }
-
 
 void MainWindow::updateTextFormat(const QTextCharFormat &format) {
     QTextCursor cursor = ui->textEdit->textCursor();
@@ -163,11 +176,8 @@ void MainWindow::updateTextFormat(const QTextCharFormat &format) {
     ui->textEdit->setCurrentCharFormat(format);
 }
 
-
-
 void MainWindow::on_actionFontSize_triggered() {
     QDialog dialog(this);
-
 
     QSpinBox *spinBox = new QSpinBox(&dialog);
     spinBox->setRange(1, 100);
@@ -190,7 +200,6 @@ void MainWindow::on_actionFontSize_triggered() {
     }
 }
 
-
 void MainWindow::on_actionToggleFullScreen_triggered() {
     if (isFullScreen()) {
         showNormal();
@@ -211,6 +220,7 @@ void MainWindow::on_actionNew_triggered() {
         }
     }
     ui->textEdit->clear();
+    isTextModified = false; // Сбрасываем флаг после создания нового файла
 }
 
 void MainWindow::on_actionOpen_triggered() {
@@ -221,6 +231,7 @@ void MainWindow::on_actionOpen_triggered() {
             QTextStream in(&file);
             ui->textEdit->setHtml(in.readAll());
             file.close();
+            isTextModified = false; // Сбрасываем флаг после открытия файла
         }
     }
 }
@@ -233,6 +244,7 @@ void MainWindow::on_actionSave_triggered() {
             QTextStream out(&file);
             out << ui->textEdit->toHtml();
             file.close();
+            isTextModified = false; // Сбрасываем флаг после сохранения файла
         }
     }
 }
@@ -240,7 +252,6 @@ void MainWindow::on_actionSave_triggered() {
 void MainWindow::on_actionPaste_triggered() {
     ui->textEdit->paste();
 }
-
 
 void MainWindow::on_actionFind_triggered() {
     QDialog dialog(this);
@@ -265,7 +276,6 @@ void MainWindow::on_actionFind_triggered() {
         }
     }
 }
-
 
 void MainWindow::on_actionReplace_triggered() {
     QDialog dialog(this);
@@ -394,6 +404,7 @@ void MainWindow::on_actionRemoveColumn_triggered()
         QMessageBox::warning(this, "Предупреждение", "Пожалуйста, поместите курсор внутри таблицы.");
     }
 }
+
 void MainWindow::on_actionDataRecovery_triggered() {
     // Путь к временном файлу
     QString tempFilePath = "temporary.txt"; // Убедитесь, что путь правильный
@@ -427,4 +438,3 @@ void MainWindow::on_actionfontColor_triggered()
            updateTextFormat(format);
        }
 }
-
