@@ -93,11 +93,18 @@
     <addaction name="actionSelectFont"/>
     <addaction name="actionfontColor"/>
    </widget>
+   <widget class="QMenu" name="menuGraphics">
+    <property name="title">
+     <string>Graphics editor</string>
+    </property>
+    <addaction name="actionNew_2"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuFormat"/>
    <addaction name="menuFont"/>
    <addaction name="menuTable"/>
+   <addaction name="menuGraphics"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="mainToolBar">
@@ -448,6 +455,11 @@
    </property>
    <property name="text">
     <string>actionToggleTheme</string>
+   </property>
+  </action>
+  <action name="actionNew_2">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>

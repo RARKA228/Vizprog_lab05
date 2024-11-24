@@ -45,9 +45,10 @@ private slots:
     void on_actionRemoveColumn_triggered();
     void on_actionDataRecovery_triggered();
     void on_actionfontColor_triggered();
-    void on_actionNew_2_triggered();
     void on_actionToggleTheme_triggered();
     void onTextChanged(); // Метод для обработки изменений текста
+
+    void on_actionNew_2_triggered();
 
 private:
     Ui::MainWindow *ui;
