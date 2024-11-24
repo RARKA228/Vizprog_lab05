@@ -26,15 +26,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        customgraphicsview.cpp \
         edit_functions.cpp \
         file_funct.cpp \
+        graphics_editor.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        shape.cpp
 
 HEADERS += \
+        customgraphicsview.h \
         edit_functions.h \
         file_funct.h \
-        mainwindow.h
+        graphics_editor.h \
+        mainwindow.h \
+        shape.h
 
 FORMS += \
         mainwindow.ui
