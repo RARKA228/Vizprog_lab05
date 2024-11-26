@@ -26,23 +26,37 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        bird.cpp \
+        circle.cpp \
+        complexobject.cpp \
         customgraphicsview.cpp \
         edit_functions.cpp \
         file_funct.cpp \
         graphics_editor.cpp \
+        line.cpp \
         main.cpp \
         mainwindow.cpp \
+        movabletextitem.cpp \
         rectangle.cpp \
-        shape.cpp
+        shape.cpp \
+        triangle.cpp \
+        dog.cpp
 
 HEADERS += \
+        bird.h \
+        circle.h \
+        complexobject.h \
         customgraphicsview.h \
         edit_functions.h \
         file_funct.h \
         graphics_editor.h \
+        line.h \
         mainwindow.h \
+        movabletextitem.h \
         rectangle.h \
-        shape.h
+        shape.h \
+        triangle.h \
+        dog.h
 
 FORMS += \
         mainwindow.ui
