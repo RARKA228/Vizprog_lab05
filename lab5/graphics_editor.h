@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
-#include <QGraphicsPixmapItem> // для вставки картинок
+#include <QGraphicsPixmapItem> // Для отображения изображений
 #include <QPushButton>
 #include <QComboBox>
 
@@ -17,30 +17,30 @@ public:
     ~GraphicsEditorWindow();
 
 protected:
-    void dragEnterEvent(QDragEnterEvent *event) override;  // обработка события начала перетаскивания
-    void dropEvent(QDropEvent *event) override;  // обработка события конца перетаскивания
+    void dragEnterEvent(QDragEnterEvent *event) override;  // Обработка события входа перетаскивания
+    void dropEvent(QDropEvent *event) override;  // Обработка события завершения перетаскивания
 
 private slots:
-    void addCircle();
-    void addRectangle();
-    void addTriangle();
-    void addLine();
-    void saveImage();
-    void importImage();
-    void setBrushSize();
-    void setBrushColor();
-    void setEraser();
-    void changeBackgroundColor();
-    void setBrushStyle();
-    void deleteSelectedItem();
-    void addText();
+    void addCircle();         // Слот для добавления круга
+    void addRectangle();      // Слот для добавления прямоугольника
+    void addTriangle();       // Слот для добавления треугольника
+    void addLine();           // Слот для добавления линии
+    void saveImage();         // Слот для сохранения изображения
+    void importImage();       // Слот для импорта изображения
+    void setBrushSize();      // Слот для изменения размера кисти
+    void setBrushColor();     // Слот для изменения цвета кисти
+    void setEraser();         // Слот для включения режима ластика
+    void changeBackgroundColor();  // Слот для изменения фона
+    void setBrushStyle();     // Слот для изменения стиля кисти
+    void deleteSelectedItem(); // Слот для удаления выбранного элемента
+    void addText();           // Слот для добавления текста
 
 private:
     QGraphicsScene *scene;    // Сцена для отрисовки элементов
-    QColor currentBrushColor;
-    qreal currentBrushSize;
-    Qt::BrushStyle currentBrushStyle;
-    bool isEraserMode;
+    QColor currentBrushColor; // Текущий цвет кисти
+    qreal currentBrushSize;   // Текущий размер кисти
+    Qt::BrushStyle currentBrushStyle; // Текущий стиль кисти
+    bool isEraserMode;        // Режим ластика
 };
 
 #endif // GRAPHICS_EDITOR_H

@@ -1,4 +1,8 @@
 #include "graphics_editor.h"
+#include "circle.h"
+#include "line.h"
+#include "triangle.h"
+#include "rectangle.h"
 #include <QGraphicsView>
 #include <QToolBar>
 #include <QAction>
@@ -16,7 +20,11 @@
 #include <QGraphicsPixmapItem> // Для отображения изображений
 #include <QComboBox>
 #include <customgraphicsview.h>
+#include "movabletextitem.h"
 #include "QtMath"
+#include "complexobject.h"
+#include "dog.h"
+#include "bird.h"
 
 GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
     : QMainWindow(parent), scene(new QGraphicsScene(this)),
@@ -35,7 +43,14 @@ GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
     // Создаем панель инструментов
     QToolBar *toolbar = addToolBar("Shapes");
 
+    QAction *addTextAction = new QAction("Add Text", this);
+    toolbar->addAction(addTextAction);
+    connect(addTextAction, &QAction::triggered, this, &GraphicsEditorWindow::addText);
 
+    // Добавляем кнопку для круга
+    QAction *addCircleAction = new QAction("Add Circle", this);
+    toolbar->addAction(addCircleAction);
+    connect(addCircleAction, &QAction::triggered, this, &GraphicsEditorWindow::addCircle);
 
     // Кнопка для удаления выбранного элемента
     QAction *deleteAction = new QAction("Delete", this);
@@ -68,6 +83,21 @@ GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
     toolbar->addAction(brushColorAction);
     connect(brushColorAction, &QAction::triggered, this, &GraphicsEditorWindow::setBrushColor);
 
+    // Добавляем кнопку для линии
+    QAction *addLineAction = new QAction("Add Line", this);
+    toolbar->addAction(addLineAction);
+    connect(addLineAction, &QAction::triggered, this, &GraphicsEditorWindow::addLine);
+
+    // Добавляем кнопку для прямоугольника
+    QAction *addRectangleAction = new QAction("Add Rectangle", this);
+    toolbar->addAction(addRectangleAction);
+    connect(addRectangleAction, &QAction::triggered, this, &GraphicsEditorWindow::addRectangle);
+
+    // Добавляем кнопку для треугольника
+    QAction *addTriangleAction = new QAction("Add Triangle", this);
+    toolbar->addAction(addTriangleAction);
+    connect(addTriangleAction, &QAction::triggered, this, &GraphicsEditorWindow::addTriangle);
+
      QComboBox *brushStyleComboBox = new QComboBox(this);
      brushStyleComboBox->addItem("Solid", QVariant::fromValue(Qt::SolidPattern));
      brushStyleComboBox->addItem("Dense 1", QVariant::fromValue(Qt::Dense5Pattern));
@@ -87,10 +117,51 @@ GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
      QAction *eraserAction = new QAction("Eraser", this);
      toolbar->addAction(eraserAction);
      connect(eraserAction, &QAction::triggered, this, &GraphicsEditorWindow::setEraser);
+
+     QTimer *timer = new QTimer(this);
+     timer->start(16); // Set the timer interval (e.g., 16 ms for ~60 FPS)
+
+     //Dog *dog = new Dog();
+     //connect(timer, &QTimer::timeout, [dog, view]() { dog->move(view); }); // Pass the view to the move function
+     //scene->addItem(dog);
+
+     Bird *bird = new Bird();
+     connect(timer, &QTimer::timeout, [bird, view]() { bird->move(view); }); // Pass the view to the move function
+     scene->addItem(bird);
+//     Dog *dog1 = new Dog();
+//     connect(timer, &QTimer::timeout, [dog1, view]() { dog1->move(view); }); // Pass the view to the move function
+//     scene->addItem(dog1);
+//     Dog *dog2 = new Dog();
+//     connect(timer, &QTimer::timeout, [dog2, view]() { dog2->move(view); }); // Pass the view to the move function
+//     scene->addItem(dog2);
 }
 
 GraphicsEditorWindow::~GraphicsEditorWindow() {
     delete scene;
+}
+
+
+// Слот для добавления круга
+void GraphicsEditorWindow::addCircle() {
+    // Запрашиваем радиус
+    bool ok;
+    qreal radius = QInputDialog::getDouble(this, "Circle Radius", "Enter circle radius:", 50, 1, 200, 1, &ok);
+    if (!ok) return;
+
+    // Выбор цвета заливки
+    QColor fillColor = QColorDialog::getColor(Qt::blue, this, "Select Fill Color");
+    if (!fillColor.isValid()) return;
+
+    // Выбор цвета обводки
+    QColor borderColor = QColorDialog::getColor(Qt::black, this, "Select Border Color");
+    if (!borderColor.isValid()) return;
+
+    QBrush brush(fillColor);
+    QPen pen(borderColor);
+    pen.setWidth(2); // Устанавливаем ширину обводки
+
+    Circle *circle = new Circle(radius, brush, pen); // Создаём круг с заданными параметрами
+    scene->addItem(circle); // Добавляем круг на сцену
 }
 
 // Слот для сохранения изображения
@@ -170,6 +241,27 @@ void GraphicsEditorWindow::changeBackgroundColor() {
     }
 }
 
+// Слот для добавлеия текста
+void GraphicsEditorWindow::addText() {
+    // Запрашиваем текст
+    bool ok;
+    QString text = QInputDialog::getText(this, "Add Text", "Enter your text:", QLineEdit::Normal, "", &ok);
+    if (!ok || text.isEmpty()) return;
+
+    // Запрашиваем шрифт
+    bool fontOk;
+    QFont font = QFontDialog::getFont(&fontOk, QFont("Arial", 12), this, "Select Font");
+    if (!fontOk) return;
+
+    // Создаем элемент текста с поведением перемещения правой кнопкой мыши
+    MovableTextItem *textItem = new MovableTextItem(text);
+    textItem->setFont(font);
+
+    // Добавляем текст на сцену
+    scene->addItem(textItem);
+}
+
+
 void GraphicsEditorWindow::deleteSelectedItem() {
     // Получаем выбранные элементы
     QList<QGraphicsItem*> selectedItems = scene->selectedItems();
@@ -204,3 +296,81 @@ void GraphicsEditorWindow::dropEvent(QDropEvent *event) {
         event->acceptProposedAction();
     }
 }
+// Конструктор и слот для добавления линии
+void GraphicsEditorWindow::addLine() {
+    // Запрашиваем длину и угол
+    bool ok;
+    qreal length = QInputDialog::getDouble(this, "Line Length", "Enter line length:", 100, 1, 500, 1, &ok);
+    if (!ok) return;
+
+    qreal angle = QInputDialog::getDouble(this, "Line Angle", "Enter line angle (in degrees):", 0, -360, 360, 1, &ok);
+    if (!ok) return;
+
+    // Выбор цвета обводки
+    QColor borderColor = QColorDialog::getColor(Qt::black, this, "Select Border Color");
+    if (!borderColor.isValid()) return;
+
+    QPen pen(borderColor);
+    pen.setWidth(2); // Устанавливаем ширину обводки
+
+    Line *line = new Line(length, qDegreesToRadians(angle), pen); // Создаём линию с заданными параметрами
+    scene->addItem(line); // Добавляем линию на сцену
+}
+
+
+// Конструктор и слот для добавления прямоугольника
+void GraphicsEditorWindow::addRectangle() {
+    // Запрашиваем ширину и высоту
+    bool ok;
+    qreal width = QInputDialog::getDouble(this, "Rectangle Width", "Enter rectangle width:", 100, 1, 500, 1, &ok);
+    if (!ok) return;
+
+    qreal height = QInputDialog::getDouble(this, "Rectangle Height", "Enter rectangle height:", 100, 1, 500, 1, &ok);
+    if (!ok) return;
+
+    // Выбор цвета заливки
+    QColor fillColor = QColorDialog::getColor(Qt::blue, this, "Select Fill Color");
+    if (!fillColor.isValid()) return;
+
+    // Выбор цвета обводки
+    QColor borderColor = QColorDialog::getColor(Qt::black, this, "Select Border Color");
+    if (!borderColor.isValid()) return;
+
+    QBrush brush(fillColor);
+    QPen pen(borderColor);
+    pen.setWidth(2); // Устанавливаем ширину ��бводки
+
+    Rectangle *rect = new Rectangle(width, height, brush, pen); // Создаём прямоугольник с заданными параметрми
+    scene->addItem(rect); // Добавляем прямоугольник на сцену
+}
+
+// Конструктор и слот для добавления треугольника
+void GraphicsEditorWindow::addTriangle() {
+    // Запрашиваем основание и высоту
+    bool ok;
+    qreal base = QInputDialog::getDouble(this, "Triangle Base", "Enter triangle base:", 100, 1, 500, 1, &ok);
+    if (!ok) return;
+
+    qreal height = QInputDialog::getDouble(this, "Triangle Height", "Enter triangle height:", 100, 1, 500, 1, &ok);
+    if (!ok) return;
+
+    // Выбор цвета заливки
+    QColor fillColor = QColorDialog::getColor(Qt::blue, this, "Select Fill Color");
+    if (!fillColor.isValid()) return;
+
+    // Выбор цвета обводки
+    QColor borderColor = QColorDialog::getColor(Qt::black, this, "Select Border Color");
+    if (!borderColor.isValid()) return;
+
+    QBrush brush(fillColor);
+    QPen pen(borderColor);
+    pen.setWidth(2); // Устанавливаем ширину обводки
+
+    Triangle *triangle = new Triangle(base, height, brush, pen); // Создаём треугольник с заданными параметрами
+    scene->addItem(triangle); // Добавляем треугольник на сцену
+}
+
+
+
+
+

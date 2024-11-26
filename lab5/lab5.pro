@@ -32,6 +32,7 @@ SOURCES += \
         graphics_editor.cpp \
         main.cpp \
         mainwindow.cpp \
+        rectangle.cpp \
         shape.cpp
 
 HEADERS += \
@@ -40,6 +41,7 @@ HEADERS += \
         file_funct.h \
         graphics_editor.h \
         mainwindow.h \
+        rectangle.h \
         shape.h
 
 FORMS += \
