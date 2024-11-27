@@ -25,6 +25,7 @@
 #include "complexobject.h"
 #include "dog.h"
 #include "bird.h"
+#include "flower.h"
 
 GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
     : QMainWindow(parent), scene(new QGraphicsScene(this)),
@@ -121,19 +122,20 @@ GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
      QTimer *timer = new QTimer(this);
      timer->start(16); // Set the timer interval (e.g., 16 ms for ~60 FPS)
 
-     //Dog *dog = new Dog();
-     //connect(timer, &QTimer::timeout, [dog, view]() { dog->move(view); }); // Pass the view to the move function
-     //scene->addItem(dog);
+     Dog *dog = new Dog();
+     dog->setPos(250, 400);
+     connect(timer, &QTimer::timeout, [dog, view]() { dog->move(view); }); // Pass the view to the move function
+     scene->addItem(dog);
 
      Bird *bird = new Bird();
+     bird->setPos(200, 300);
      connect(timer, &QTimer::timeout, [bird, view]() { bird->move(view); }); // Pass the view to the move function
      scene->addItem(bird);
-//     Dog *dog1 = new Dog();
-//     connect(timer, &QTimer::timeout, [dog1, view]() { dog1->move(view); }); // Pass the view to the move function
-//     scene->addItem(dog1);
-//     Dog *dog2 = new Dog();
-//     connect(timer, &QTimer::timeout, [dog2, view]() { dog2->move(view); }); // Pass the view to the move function
-//     scene->addItem(dog2);
+     Flower *flower = new Flower();
+     flower->setPos(100, 200);
+     connect(timer, &QTimer::timeout, [flower, view]() { flower->move(view); }); // Передаем представление в функцию перемещения
+     scene->addItem(flower);
+
 }
 
 GraphicsEditorWindow::~GraphicsEditorWindow() {

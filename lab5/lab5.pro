@@ -32,6 +32,7 @@ SOURCES += \
         customgraphicsview.cpp \
         edit_functions.cpp \
         file_funct.cpp \
+        flower.cpp \
         graphics_editor.cpp \
         line.cpp \
         main.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
         customgraphicsview.h \
         edit_functions.h \
         file_funct.h \
+        flower.h \
         graphics_editor.h \
         line.h \
         mainwindow.h \
