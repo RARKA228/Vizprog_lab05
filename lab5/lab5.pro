@@ -26,7 +26,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        bird.cpp \
         circle.cpp \
         complexobject.cpp \
         customgraphicsview.cpp \
@@ -34,17 +33,20 @@ SOURCES += \
         file_funct.cpp \
         flower.cpp \
         graphics_editor.cpp \
+        human.cpp \
+        ksusha.cpp \
         line.cpp \
         main.cpp \
         mainwindow.cpp \
+        marina.cpp \
         movabletextitem.cpp \
         rectangle.cpp \
         shape.cpp \
+        slava.cpp \
         triangle.cpp \
         dog.cpp
 
 HEADERS += \
-        bird.h \
         circle.h \
         complexobject.h \
         customgraphicsview.h \
@@ -52,11 +54,15 @@ HEADERS += \
         file_funct.h \
         flower.h \
         graphics_editor.h \
+        human.h \
+        ksusha.h \
         line.h \
         mainwindow.h \
+        marina.h \
         movabletextitem.h \
         rectangle.h \
         shape.h \
+        slava.h \
         triangle.h \
         dog.h
 
@@ -101,7 +107,9 @@ DISTFILES += \
     icons/toolbar/wrap.bmp \
     icons/toolbar/zoomIn.bmp \
     icons/toolbar/zoomOut.bmp \
-    sounds/collision.mp3
+    sounds/collision.mp3 \
+    sounds/collision.mp3 \
+    sounds/collision.wav
 
 RESOURCES += \
     icons/toolbar/toolbar.qrc
