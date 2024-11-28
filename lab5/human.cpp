@@ -1,74 +1,70 @@
-#include "bird.h"
+#include "human.h"
 #include <QBrush>
 #include <QPen>
 #include <QPolygonF>
 #include <QColor>
 
-Bird::Bird() : ComplexObject() {
-    QColor yellow(255, 223, 0); // Определим желтый цвет для тела
+Human::Human() : ComplexObject() {
+    QColor skinColor(255, 204, 153); // Цвет кожи
 
-    // Тело птицы
-    QGraphicsEllipseItem* body = new QGraphicsEllipseItem(-30, -40, 60, 80);
-    body->setBrush(QBrush(yellow));
-    body->setPen(QPen(Qt::black));
-    addItem(body);
+        // Голова
+        QGraphicsEllipseItem* head = new QGraphicsEllipseItem(-30, -100, 60, 80);
+        head->setBrush(QBrush(skinColor));
+        head->setPen(QPen(Qt::black));
+        addItem(head);
 
-    // Голова птицы
-    QGraphicsEllipseItem* head = new QGraphicsEllipseItem(-20, -60, 40, 40);
-    head->setBrush(QBrush(yellow));
-    head->setPen(QPen(Qt::black));
-    addItem(head);
+        // Тело
+        QGraphicsRectItem* body = new QGraphicsRectItem(-30, -60, 60, 80);
+        body->setBrush(QBrush(Qt::blue));
+        body->setPen(QPen(Qt::black));
+        addItem(body);
 
-    // Глаза птицы
-    QGraphicsEllipseItem* leftEye = new QGraphicsEllipseItem(-15, -55, 10, 10);
-    leftEye->setBrush(QBrush(Qt::white));
-    leftEye->setPen(QPen(Qt::black));
-    addItem(leftEye);
+        // Левая рука
+        QGraphicsRectItem* leftArm = new QGraphicsRectItem(-60, -40, 30, 10);
+        leftArm->setBrush(QBrush(skinColor));
+        leftArm->setPen(QPen(Qt::black));
+        addItem(leftArm);
 
-    QGraphicsEllipseItem* rightEye = new QGraphicsEllipseItem(5, -55, 10, 10);
-    rightEye->setBrush(QBrush(Qt::white));
-    rightEye->setPen(QPen(Qt::black));
-    addItem(rightEye);
+        // Правая рука
+        QGraphicsRectItem* rightArm = new QGraphicsRectItem(30, -40, 30, 10);
+        rightArm->setBrush(QBrush(skinColor));
+        rightArm->setPen(QPen(Qt::black));
+        addItem(rightArm);
 
-    // Зрачки птицы
-    QGraphicsEllipseItem* leftPupil = new QGraphicsEllipseItem(-12, -52, 3, 3);
-    leftPupil->setBrush(QBrush(Qt::black));
-    addItem(leftPupil);
+        // Левая нога
+        QGraphicsRectItem* leftLeg = new QGraphicsRectItem(-20, 20, 10, 40);
+        leftLeg->setBrush(QBrush(Qt::blue));
+        leftLeg->setPen(QPen(Qt::black));
+        addItem(leftLeg);
 
-    QGraphicsEllipseItem* rightPupil = new QGraphicsEllipseItem(8, -52, 3, 3);
-    rightPupil->setBrush(QBrush(Qt::black));
-    addItem(rightPupil);
+        // Правая нога
+        QGraphicsRectItem* rightLeg = new QGraphicsRectItem(10, 20, 10, 40);
+        rightLeg->setBrush(QBrush(Qt::blue));
+        rightLeg->setPen(QPen(Qt::black));
+        addItem(rightLeg);
 
-    // Клюв птицы
-    QPolygonF beak;
-    beak << QPointF(0, -45) << QPointF(-5, -35) << QPointF(5, -35);
-    QGraphicsPolygonItem* beakItem = new QGraphicsPolygonItem(beak);
-    beakItem->setBrush(QBrush(QColor(255, 140, 0))); // Оранжевый цвет для клюва
-    beakItem->setPen(QPen(Qt::black));
-    addItem(beakItem);
+        // Глаза
+        QGraphicsEllipseItem* leftEye = new QGraphicsEllipseItem(-16, -84, 8, 8);
+        leftEye->setBrush(QBrush(Qt::white));
+        leftEye->setPen(QPen(Qt::black));
+        addItem(leftEye);
 
-    // Левое крыло птицы
-    QPolygonF leftWing;
-    leftWing << QPointF(-30, -20) << QPointF(-60, 0) << QPointF(-30, 20);
-    QGraphicsPolygonItem* leftWingItem = new QGraphicsPolygonItem(leftWing);
-    leftWingItem->setBrush(QBrush(yellow));
-    leftWingItem->setPen(QPen(Qt::black));
-    addItem(leftWingItem);
+        QGraphicsEllipseItem* rightEye = new QGraphicsEllipseItem(8, -84, 8, 8);
+        rightEye->setBrush(QBrush(Qt::white));
+        rightEye->setPen(QPen(Qt::black));
+        addItem(rightEye);
 
-    // Правое крыло птицы
-    QPolygonF rightWing;
-    rightWing << QPointF(30, -20) << QPointF(60, 0) << QPointF(30, 20);
-    QGraphicsPolygonItem* rightWingItem = new QGraphicsPolygonItem(rightWing);
-    rightWingItem->setBrush(QBrush(yellow));
-    rightWingItem->setPen(QPen(Qt::black));
-    addItem(rightWingItem);
+        // Зрачки
+        QGraphicsEllipseItem* leftPupil = new QGraphicsEllipseItem(-14, -82, 4, 4);
+        leftPupil->setBrush(QBrush(Qt::black));
+        addItem(leftPupil);
 
-    // Лапки птицы
-    QGraphicsEllipseItem* leftFoot = new QGraphicsEllipseItem(-15, 40, 10, 10);
-    leftFoot->setBrush(QBrush(Qt::black));
-    addItem(leftFoot);
+        QGraphicsEllipseItem* rightPupil = new QGraphicsEllipseItem(10, -82, 4, 4);
+        rightPupil->setBrush(QBrush(Qt::black));
+        addItem(rightPupil);
 
-    QGraphicsEllipseItem* rightFoot = new QGraphicsEllipseItem(5, 40, 10, 10);
-    rightFoot->setBrush(QBrush(Qt::black));
-    addItem(rightFoot);
+        // Рот
+        QGraphicsLineItem* mouth = new QGraphicsLineItem(-10, -72, 10, -72);
+        mouth->setPen(QPen(Qt::black));
+        addItem(mouth);
 }

@@ -1,15 +1,15 @@
-#ifndef BIRD_H
-#define BIRD_H
+#ifndef HUMAN_H
+#define HUMAN_H
 
 #include "complexobject.h"
 #include <QGraphicsEllipseItem>
 #include <QGraphicsPolygonItem>
 #include <QTimer>
 
-class Bird : public ComplexObject
+class Human : public ComplexObject
 {
 public:
-    Bird();
+    Human();
 };
 
-#endif // BIRD_H
+#endif // HUMAN_H
