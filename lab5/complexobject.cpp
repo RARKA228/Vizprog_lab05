@@ -9,7 +9,7 @@
 
 ComplexObject::ComplexObject() : dx(1), dy(1) {
     // Initialize the sound effect
-    collisionSound.setSource(QUrl::fromLocalFile("C://collision.wav"));
+    collisionSound.setSource(QUrl::fromLocalFile("C:/Vizprog_lab05/lab5/sounds/collision.wav"));
     collisionSound.setVolume(0.5);
 }
 
