@@ -24,8 +24,11 @@
 #include "QtMath"
 #include "complexobject.h"
 #include "dog.h"
-#include "bird.h"
+#include "human.h"
 #include "flower.h"
+#include "slava.h"
+#include "marina.h"
+#include "ksusha.h"
 
 GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
     : QMainWindow(parent), scene(new QGraphicsScene(this)),
@@ -37,8 +40,8 @@ GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
     setWindowTitle("Graphics Editor");
 
     // Устанавливаем минимальный и максимальный размер окна
-    setMinimumSize(400, 400);  // Минимальный размер окна
-    setMaximumSize(1600, 1600); // Максимальный размер окна
+    setMinimumSize(800, 800);  // Минимальный размер окна
+    setMaximumSize(2160, 1440); // Максимальный размер окна
     setAcceptDrops(true);     // Разрешаем перетаскивание
 
     // Создаем панель инструментов
@@ -123,20 +126,37 @@ GraphicsEditorWindow::GraphicsEditorWindow(QWidget *parent)
      timer->start(16); // Set the timer interval (e.g., 16 ms for ~60 FPS)
 
      Dog *dog = new Dog();
-     dog->setPos(250, 400);
+     dog->setPos(150, 400);
      connect(timer, &QTimer::timeout, [dog, view]() { dog->move(view); }); // Pass the view to the move function
      scene->addItem(dog);
 
-     Bird *bird = new Bird();
-     bird->setPos(200, 300);
-     connect(timer, &QTimer::timeout, [bird, view]() { bird->move(view); }); // Pass the view to the move function
-     scene->addItem(bird);
+     Human *human = new Human();
+     human->setPos(150, 200);
+     connect(timer, &QTimer::timeout, [human, view]() { human->move(view); }); // Pass the view to the move function
+     scene->addItem(human);
+
      Flower *flower = new Flower();
-     flower->setPos(100, 200);
+     flower->setPos(50, 100);
      connect(timer, &QTimer::timeout, [flower, view]() { flower->move(view); }); // Передаем представление в функцию перемещения
      scene->addItem(flower);
 
+     Slava *slava = new Slava();
+     slava->setPos(800, 330);
+     connect(timer, &QTimer::timeout, [slava, view]() { slava->move(view); }); // Передаем представление в функцию перемещения
+     scene->addItem(slava);
+
+
+     Marina *marina= new Marina();
+     marina->setPos(800, 400);
+     connect(timer, &QTimer::timeout, [marina, view]() { marina->move(view); }); // Передаем представление в функцию перемещения
+     scene->addItem(marina);
+
+     Ksusha *ksusha= new Ksusha();
+     ksusha->setPos(800, 500);
+     connect(timer, &QTimer::timeout, [ksusha, view]() { ksusha->move(view); }); // Передаем представление в функцию перемещения
+     scene->addItem(ksusha);
 }
+
 
 GraphicsEditorWindow::~GraphicsEditorWindow() {
     delete scene;
